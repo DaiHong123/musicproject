@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.qst.mapper.TbCommentMapper" >
+  <resultMap id="BaseResultMap" type="cn.qst.pojo.TbComment" >
+    <id column="cdid" property="cdid" jdbcType="INTEGER" />
+    <result column="cdate" property="cdate" jdbcType="TIMESTAMP" />
+    <result column="parentid" property="parentid" jdbcType="INTEGER" />
+    <result column="likesum" property="likesum" jdbcType="INTEGER" />
+    <result column="mid" property="mid" jdbcType="INTEGER" />
+    <association property="user" column="uid" select="selectUser"/>
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    cdid, cdate, uid, parentid, likesum, mid, content
+  </sql>
+  
+  
+  <select id="selectByMid" resultMap="BaseResultMap">
+  	SELECT <include refid="Base_Column_List"/>
+  	FROM `tb_comment` WHERE `mid`=#{mid} ORDER BY `cdate` desc
+  </select>
+  
+  <select id="selectUser" resultType="cn.qst.pojo.TbUser">
+  	SELECT `uid`, `uname`, `image` FROM `tb_user` WHERE `uid`=#{uid}
+  </select>
+  
+  <insert id="save" parameterType="cn.qst.pojo.TbComment">
+  	INSERT INTO `tb_comment` (cdate, uid, parentid, mid, content)
+    VALUES (#{cdate,jdbcType=TIMESTAMP}, #{user.uid,jdbcType=CHAR}, 
+      #{parentid,jdbcType=INTEGER}, #{mid,jdbcType=INTEGER}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  
+  <delete id="delete">
+  	DELETE FROM `tb_comment` WHERE `cdid`=#{cdid}
+  </delete>
+  
+  <select id="countAllByMid" resultType="java.lang.Integer">
+  	SELECT count(*) FROM `tb_comment` WHERE `mid`=#{mid}
+  </select>
+  
+  
+  <select id="top10Comment" resultMap="BaseResultMap">
+  	SELECT <include refid="Base_Column_List"/>
+  	FROM `tb_comment` WHERE `mid`=#{mid} ORDER BY `likesum` desc limit 0,10
+  </select>
+  
+  
+</mapper>

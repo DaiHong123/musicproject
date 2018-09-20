@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.qst.mapper.TbMusicMapper" >
+  <resultMap id="BaseResultMap" type="cn.qst.pojo.TbMusic" >
+    <id column="mid" property="mid" jdbcType="INTEGER" />
+    <result column="mname" property="mname" jdbcType="CHAR" />
+    <result column="fileUrl" property="fileurl" jdbcType="VARCHAR" />
+    <result column="playsum" property="playsum" jdbcType="INTEGER" />
+    <result column="uploaddate" property="uploaddate" jdbcType="DATE" />
+    <result column="sname" property="sname" jdbcType="VARCHAR" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="MVid" property="mvid" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="lyricsurl" property="lyricsurl" jdbcType="VARCHAR" />
+    <result column="isdownload" property="isdownload" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    mid, mname, fileUrl, playsum, uploaddate, sname, image, MVid, status, lyricsurl, 
+    isdownload
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.qst.pojo.TbMusicExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_music
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_music
+    where mid = #{mid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_music
+    where mid = #{mid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.qst.pojo.TbMusicExample" >
+    delete from tb_music
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.qst.pojo.TbMusic" >
+    insert into tb_music (mid, mname, fileUrl, 
+      playsum, uploaddate, sname, 
+      image, MVid, status, lyricsurl, 
+      isdownload)
+    values (#{mid,jdbcType=INTEGER}, #{mname,jdbcType=CHAR}, #{fileurl,jdbcType=VARCHAR}, 
+      #{playsum,jdbcType=INTEGER}, #{uploaddate,jdbcType=DATE}, #{sname,jdbcType=VARCHAR}, 
+      #{image,jdbcType=VARCHAR}, #{mvid,jdbcType=INTEGER}, #{status,jdbcType=BIT}, #{lyricsurl,jdbcType=VARCHAR}, 
+      #{isdownload,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.qst.pojo.TbMusic" >
+    insert into tb_music
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="mname != null" >
+        mname,
+      </if>
+      <if test="fileurl != null" >
+        fileUrl,
+      </if>
+      <if test="playsum != null" >
+        playsum,
+      </if>
+      <if test="uploaddate != null" >
+        uploaddate,
+      </if>
+      <if test="sname != null" >
+        sname,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+      <if test="mvid != null" >
+        MVid,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="lyricsurl != null" >
+        lyricsurl,
+      </if>
+      <if test="isdownload != null" >
+        isdownload,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="mname != null" >
+        #{mname,jdbcType=CHAR},
+      </if>
+      <if test="fileurl != null" >
+        #{fileurl,jdbcType=VARCHAR},
+      </if>
+      <if test="playsum != null" >
+        #{playsum,jdbcType=INTEGER},
+      </if>
+      <if test="uploaddate != null" >
+        #{uploaddate,jdbcType=DATE},
+      </if>
+      <if test="sname != null" >
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="mvid != null" >
+        #{mvid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="lyricsurl != null" >
+        #{lyricsurl,jdbcType=VARCHAR},
+      </if>
+      <if test="isdownload != null" >
+        #{isdownload,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.qst.pojo.TbMusicExample" resultType="java.lang.Integer" >
+    select count(*) from tb_music
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_music
+    <set >
+      <if test="record.mid != null" >
+        mid = #{record.mid,jdbcType=INTEGER},
+      </if>
+      <if test="record.mname != null" >
+        mname = #{record.mname,jdbcType=CHAR},
+      </if>
+      <if test="record.fileurl != null" >
+        fileUrl = #{record.fileurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.playsum != null" >
+        playsum = #{record.playsum,jdbcType=INTEGER},
+      </if>
+      <if test="record.uploaddate != null" >
+        uploaddate = #{record.uploaddate,jdbcType=DATE},
+      </if>
+      <if test="record.sname != null" >
+        sname = #{record.sname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.image != null" >
+        image = #{record.image,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mvid != null" >
+        MVid = #{record.mvid,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=BIT},
+      </if>
+      <if test="record.lyricsurl != null" >
+        lyricsurl = #{record.lyricsurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isdownload != null" >
+        isdownload = #{record.isdownload,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_music
+    set mid = #{record.mid,jdbcType=INTEGER},
+      mname = #{record.mname,jdbcType=CHAR},
+      fileUrl = #{record.fileurl,jdbcType=VARCHAR},
+      playsum = #{record.playsum,jdbcType=INTEGER},
+      uploaddate = #{record.uploaddate,jdbcType=DATE},
+      sname = #{record.sname,jdbcType=VARCHAR},
+      image = #{record.image,jdbcType=VARCHAR},
+      MVid = #{record.mvid,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=BIT},
+      lyricsurl = #{record.lyricsurl,jdbcType=VARCHAR},
+      isdownload = #{record.isdownload,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.qst.pojo.TbMusic" >
+    update tb_music
+    <set >
+      <if test="mname != null" >
+        mname = #{mname,jdbcType=CHAR},
+      </if>
+      <if test="fileurl != null" >
+        fileUrl = #{fileurl,jdbcType=VARCHAR},
+      </if>
+      <if test="playsum != null" >
+        playsum = #{playsum,jdbcType=INTEGER},
+      </if>
+      <if test="uploaddate != null" >
+        uploaddate = #{uploaddate,jdbcType=DATE},
+      </if>
+      <if test="sname != null" >
+        sname = #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="mvid != null" >
+        MVid = #{mvid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="lyricsurl != null" >
+        lyricsurl = #{lyricsurl,jdbcType=VARCHAR},
+      </if>
+      <if test="isdownload != null" >
+        isdownload = #{isdownload,jdbcType=BIT},
+      </if>
+    </set>
+    where mid = #{mid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.qst.pojo.TbMusic" >
+    update tb_music
+    set mname = #{mname,jdbcType=CHAR},
+      fileUrl = #{fileurl,jdbcType=VARCHAR},
+      playsum = #{playsum,jdbcType=INTEGER},
+      uploaddate = #{uploaddate,jdbcType=DATE},
+      sname = #{sname,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      MVid = #{mvid,jdbcType=INTEGER},
+      status = #{status,jdbcType=BIT},
+      lyricsurl = #{lyricsurl,jdbcType=VARCHAR},
+      isdownload = #{isdownload,jdbcType=BIT}
+    where mid = #{mid,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByLid" resultMap="BaseResultMap">
+  	SELECT `tb_music`.mid, mname, fileUrl, playsum, uploaddate, sname, image, MVid, status, lyricsurl, isdownload
+  	FROM `tb_music`,`tb_music_musiclist` WHERE `tb_music`.`mid`=`tb_music_musiclist`.`mid` AND `mlid`=#{mlid}
+  </select>
+
+<select id="selectBySname" resultMap="BaseResultMap">
+SELECT *
+FROM `tb_music`
+where `sname` = #{ssname} 
+</select>
+
+
+<select id="selectByCid" resultType="java.lang.Integer">
+SELECT mid
+FROM `tb_music_category`
+where `cid` = #{cid} 
+
+</select>
+
+
+
+</mapper>
